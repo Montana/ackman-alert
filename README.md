@@ -78,7 +78,7 @@ Below is a mitigations table I've made to let you know what can break `ackman-al
 |                              | Truncated text in banner                    | Limit to `\~180` chars; append link                                                     |
 |                              | Out-of-order banners                        | Accept macOS queueing; consider batching alerts                                         |
 
-Now that we know what the mitigations are, let's get this to run on every macOS booot. 
+Now that we know what the mitigations are, let's get this to run on every macOS booot:
 
 ## Make it run on boot (macOS)
 
