@@ -33,7 +33,7 @@ pip install snscrape
 python ackman_alert.py --once
 ```
 
-# 4) Run in a loop (foreground)
+# 4) Run in a `loop` (foreground)
 ```bash
 python ackman_alert.py --notify-on-first
 ```
