@@ -22,7 +22,7 @@ python3 -m venv ~/.venvs/ackman-alert
 source ~/.venvs/ackman-alert/bin/activate
 ```
 
-# 2) Install snscrape
+# 2) Install `snscrape`
 ```bsah
 pip install --upgrade pip
 pip install snscrape
