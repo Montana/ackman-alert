@@ -46,6 +46,40 @@ If you prefer clickable notifications that open the post automatically, install 
 brew install terminal-notifier
 ```
 
+Below is a mitigations table I've made to let you know what can break `ackman-alert` and what likely isn't going to break it:
+
+| Category                     | What Could Go Wrong                         | Mitigation                                                                              |
+| ---------------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------- |
+| **Scraper-Level (snscrape)** | X changes markup → scraper fails            | Catch exceptions, log warnings, retry next loop; keep `snscrape` updated                |
+|                              | Rate limiting or blocking by X              | Add per-handle delay or backoff; reduce polling interval                                |
+|                              | Network failures (timeout, DNS)             | Wrap fetch in try/except; retry on next loop                                            |
+|                              | Library bugs / environment drift            | Pin dependency versions in `requirements.txt`; test regularly                           |
+| **Notifications**            | AppleScript fails silently                  | Fallback to `terminal-notifier` if installed                                            |
+|                              | `terminal-notifier` missing                 | Default to AppleScript-only; document install step (`brew install terminal-notifier`)   |
+|                              | macOS Focus/Do Not Disturb hides banners    | User awareness: check Notification Center; optionally add logging of notifications sent |
+|                              | Notification collapse (multiple posts)      | Send one per post with unique IDs; consider batching only for high-volume handles       |
+| **State File**               | Corruption due to crash                     | Atomic write (temp file + replace) to prevent partial JSON                              |
+|                              | Disk full / permission error                | Store state in `~/.x_multi_alert_state.json`; add error logging if writes fail          |
+|                              | Manual edits break JSON                     | Validate state file on load; fallback to empty dict if invalid                          |
+| **Logic Edge Cases**         | Tweets without text (image/video/poll only) | Fallback to “\[Media Post]” in notification body                                        |
+|                              | Retweets or pinned tweets repeat            | Filter for `isRetweet == False`; ignore pinned items                                    |
+|                              | Timezone/clock drift                        | Compare post IDs, not timestamps                                                        |
+| **Environment / Runtime**    | Launchd not starting script                 | Test with `launchctl list`; document setup in README                                    |
+|                              | Virtualenv breaks after Python update       | Pin Python version; rebuild venv after upgrades                                         |
+|                              | PATH issues (osascript not found)           | Use absolute paths in `launchd` plist                                                   |
+|                              | Mac sleeps during interval                  | Accept gap (catch up next run); or run on always-on machine                             |
+|                              | Multiple copies running                     | Use lockfile (`.pid`) to ensure only one instance                                       |
+| **Scaling / Multi-Handle**   | Private/suspended/renamed account           | Catch 404 errors, log once, skip handle                                                 |
+|                              | Too many handles slows loop                 | Limit handle count; stagger checks                                                      |
+|                              | Handle renamed by user                      | Update `--handles` list manually                                                        |
+|                              | Deleted accounts                            | Script logs warning and continues                                                       |
+| **User Experience**          | Notification fatigue (spam)                 | Increase interval or limit monitored accounts                                           |
+|                              | Duplicate alerts                            | Track per-handle last ID; skip repeats                                                  |
+|                              | Truncated text in banner                    | Limit to `\~180` chars; append link                                                     |
+|                              | Out-of-order banners                        | Accept macOS queueing; consider batching alerts                                         |
+
+Now that we know what the mitigations are, let's get this to run on every macOS booot. 
+
 ## Make it run on boot (macOS)
 
 ```xml
