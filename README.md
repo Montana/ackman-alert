@@ -119,7 +119,39 @@ launchctl start com.michael.ackman-alert
 ```
 Worked for me perfectly. 
 
-## Making the script executable 
+## Get push notifications to your iPhone
+
+First, get an API key from Pushbullet, add this snippet into `ackman-alert.py`:
+
+```python3
+import requests, os
+
+PUSHBULLET_TOKEN = os.getenv("PUSHBULLET_TOKEN")
+
+def pushbullet_notify(title, body):
+    if not PUSHBULLET_TOKEN:
+        return
+    requests.post("https://api.pushbullet.com/v2/pushes",
+                  headers={"Access-Token": PUSHBULLET_TOKEN,
+                           "Content-Type": "application/json"},
+                  json={"type": "note", "title": title, "body": body})
+```
+
+Now you have the ability to get `ackman-alerts` on your iPhone and not just on your MacBook or iMac. This is how it should look when you get it on your iPhone 15 (or newer):
+
+![IMG_8793](https://github.com/user-attachments/assets/1d6941c2-2832-4cf6-8843-f4e533be5420)
+
+If you’re on macOS, you can piggyback on `Messages.app` to send yourself an iMessage. The example I'm going to show is something I did in AppleScript:
+
+```applescript
+import subprocess
+
+def imessage_notify(phone, text):
+    script = f'tell application "Messages" to send "{text}" to buddy "{phone}" of service "E:iMessage"'
+    subprocess.run(["osascript", "-e", script])
+```
+
+## Make the script executable
 
 Put your script in `~/bin/ackman-alert.py` (or any directory you like) and make it executable:
 
