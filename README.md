@@ -121,7 +121,7 @@ Worked for me perfectly.
 
 ## Get push notifications to your iPhone
 
-First, get an API key from Pushbullet, add this snippet into `ackman-alert.py`:
+First, get an API key from `Pushbullet`, add this snippet into `ackman-alert.py`:
 
 ```python3
 import requests, os
