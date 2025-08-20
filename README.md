@@ -8,6 +8,8 @@ In this instance I do duplicate handle checks or make `HANDLES = ["BillAckman", 
 
 This design choice by me (Michael Mendy) provides flexibility for extending the system beyond Ackman alone, useful if you want to follow a set of influential voices simultaneously. Furthermore, the state persistence mechanism `(~/.ackman_alert_state.json by default)` can be easily extended to store per-handle last `IDs`, ensuring no cross-account conflicts.
 
+Whilst making the script, I wanted to balances simplicity (no API tokens required) with durability, making it a practical solution for real-time push notifications on macOS—even in the face of occasional upstream changes for when Bill Ackman posted to X. 
+
 ## Quick Setup
 
 # 1) Create a venv (optional but recommended)
