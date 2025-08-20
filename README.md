@@ -16,7 +16,7 @@ It's worth to note, if you simply reused the original script I wrote with multip
 
 ## Quick Setup
 
-# 1) Create a venv (optional but recommended)
+# 1) Create a `venv` (optional but recommended)
 ```bash
 python3 -m venv ~/.venvs/ackman-alert
 source ~/.venvs/ackman-alert/bin/activate
