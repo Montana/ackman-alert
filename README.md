@@ -2,11 +2,11 @@
 
 <img width="1480" height="833" alt="ackman_alert_overlay" src="https://github.com/user-attachments/assets/7cf27e07-f703-4e58-b127-c1cce7520f0e" />
 
-Ackman Alert in particular uses `snscrape`, which occasionally hiccups if X changes markup; the script is resilient and keeps trying.
+Ackman Alert in particular uses `snscrape`, which occasionally drags if X changes markup; the script is resilient and keeps trying.
 
 In this instance I do duplicate handle checks or make `HANDLES = ["BillAckman", "another"]` and loop. It is worth noting the loop then iterates over each handle in sequence, scraping the most recent post for each one and comparing it against a saved state file.
 
-This design choice by me (Michael Mendy) provides flexibility for extending the system beyond Ackman alone, useful if you want to follow a set of influential voices simultaneously. Furthermore, the state persistence mechanism `(~/.ackman_alert_state.json`) by default) can be easily extended to store per-handle last `IDs`, ensuring no cross-account conflicts.
+This design choice by me (Michael Mendy) provides flexibility for extending the system beyond Ackman alone, useful if you want to follow a set of influential voices simultaneously. Furthermore, the state persistence mechanism `(~/.ackman_alert_state.json`) by default) can be easily extended to store per-handle last `IDs`, ensuring no cross-account conflicts. The script handles all the usual hiccups you'd expect—network timeouts, wonky responses, and when X just decides to take a break—then picks up right where it left off once everything's back to normal.
 
 Whilst making the script, I wanted to balances simplicity (no API tokens required) with durability, making it a practical solution for real-time push notifications on macOS—even in the face of occasional upstream changes for when Bill Ackman posted to X. 
 
