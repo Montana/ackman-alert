@@ -37,3 +37,42 @@ If you prefer clickable notifications that open the post automatically, install 
 ```bash
 brew install terminal-notifier
 ```
+
+## Make it run on boot (macOS)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.michael.ackman-alert</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/USERNAME/.venvs/ackman-alert/bin/python</string>
+    <string>/Users/USERNAME/path/to/ackman_alert.py</string>
+    <string>--notify-on-first</string>
+  </array>
+
+  <key>StartInterval</key>
+  <integer>300</integer>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/tmp/ackman-alert.out</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/ackman-alert.err</string>
+</dict>
+</plist>
+```
+Then you need to load it:
+
+```bash
+launchctl unload ~/Library/LaunchAgents/com.michael.ackman-alert.plist 2>/dev/null || true
+launchctl load ~/Library/LaunchAgents/com.michael.ackman-alert.plist
+launchctl start com.michael.ackman-alert
+```
+Worked for me perfectly. 
