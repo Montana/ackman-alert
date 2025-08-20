@@ -10,6 +10,8 @@ This design choice by me (Michael Mendy) provides flexibility for extending the 
 
 Whilst making the script, I wanted to balances simplicity (no API tokens required) with durability, making it a practical solution for real-time push notifications on macOS—even in the face of occasional upstream changes for when Bill Ackman posted to X. 
 
+It's worth to note, if you simply reused the original script I wrote with multiple names hard-coded, you’d run into state collisions. That’s because the script stored just one “last seen post ID” in a single JSON file `(~/.ackman_alert_state.json)`. If account A updated the file, then account B would overwrite it, and the script would lose track of which tweets it had already notified you about.
+
 ## Quick Setup
 
 # 1) Create a venv (optional but recommended)
