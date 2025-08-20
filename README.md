@@ -10,6 +10,8 @@ This design choice by me (Michael Mendy) provides flexibility for extending the 
 
 Whilst making the script, I wanted to balances simplicity (no API tokens required) with durability, making it a practical solution for real-time push notifications on macOS—even in the face of occasional upstream changes for when Bill Ackman posted to X. 
 
+<img width="3840" height="2979" alt="Untitled diagram _ Mermaid Chart-2025-08-20-115157" src="https://github.com/user-attachments/assets/23cb8f41-dd1b-4b27-9787-66ebfe37e309" />
+
 It's worth to note, if you simply reused the original script I wrote with multiple names hard-coded, you’d run into state collisions. That’s because the script stored just one “last seen post ID” in a single JSON file `(~/.ackman_alert_state.json)`. If account A updated the file, then account B would overwrite it, and the script would lose track of which tweets it had already notified you about.
 
 ## Quick Setup
