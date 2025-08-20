@@ -4,7 +4,9 @@
 
 Ackman Alert in particular uses `snscrape`, which occasionally hiccups if X changes markup; the script is resilient and keeps trying.
 
-In this instance I do duplicate handle checks or make `HANDLES = ["BillAckman", "another"]` and loop.
+In this instance I do duplicate handle checks or make `HANDLES = ["BillAckman", "another"]` and loop. It is worth noting the loop then iterates over each handle in sequence, scraping the most recent post for each one and comparing it against a saved state file.
+
+This design choice by me (Michael Mendy) provides flexibility for extending the system beyond Ackman alone, useful if you want to follow a set of influential voices simultaneously. Furthermore, the state persistence mechanism `(~/.ackman_alert_state.json by default)` can be easily extended to store per-handle last `IDs`, ensuring no cross-account conflicts.
 
 ## Quick Setup
 
