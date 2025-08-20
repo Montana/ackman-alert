@@ -119,6 +119,20 @@ launchctl start com.michael.ackman-alert
 ```
 Worked for me perfectly. 
 
+## Making the script executable 
+
+Put your script in `~/bin/ackman-alert.py` (or any directory you like) and make it executable:
+
+```bash
+chmod +x ~/bin/ackman-alert.py
+```
+Then run:
+
+```python3
+python3 ackman-alert.py
+```
+Enjoy the updates from Bill Ackman himself.
+
 ## Author
 
 Michael Mendy (c) 2025.
