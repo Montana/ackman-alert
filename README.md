@@ -76,3 +76,7 @@ launchctl load ~/Library/LaunchAgents/com.michael.ackman-alert.plist
 launchctl start com.michael.ackman-alert
 ```
 Worked for me perfectly. 
+
+## Author
+
+Michael Mendy (c) 2025.
