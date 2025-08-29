@@ -4,7 +4,7 @@ from pathlib import Path
 
 HANDLE = "BillAckman"   
 STATE_FILE = Path.home() / ".ackman_alert_state.json"
-CHECK_INTERVAL_SEC = 60  # only used in --loop mode - michael 
+CHECK_INTERVAL_SEC = 60  # only used in --for-loop mode - michael 
 
 def notify(title, subtitle, message):
     script = f'display notification {json.dumps(message)} with title {json.dumps(title)} subtitle {json.dumps(subtitle)}'
